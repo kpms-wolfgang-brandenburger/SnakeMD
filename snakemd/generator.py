@@ -526,13 +526,14 @@ class Paragraph(Element):
         set True to convert the paragraph to a blockquote (i.e., True -> > quote)
     """
 
-    def __init__(self, content: Iterable[InlineText | str], code: bool = False, lang: str = "generic", quote: bool = False):
+    def __init__(self, content: Iterable[InlineText | str], code: bool = False, lang: str = "generic", quote: bool = False, indent: int = 0):
         super().__init__()
         self._content: list[InlineText] = self._process_content(content)
         self._code = code
         self._lang = lang
         self._quote = quote
         self._backticks = 3
+        self._indent = indent
 
     @staticmethod
     def _process_content(content) -> None:
@@ -564,7 +565,7 @@ class Paragraph(Element):
         elif self._quote:
             return f"> {paragraph}"
         else:
-            return " ".join(paragraph.split())
+            return f'{" " * self._indent}{" ".join(paragraph.split())}'
 
     def verify(self) -> Verification:
         """
@@ -1187,7 +1188,7 @@ class Document:
         logger.debug(f"Added header to document\n{header}")
         return header
 
-    def add_paragraph(self, text: str) -> Paragraph:
+    def add_paragraph(self, text: str, indent: int = 0) -> Paragraph:
         """
         A convenience method which adds a simple paragraph of text to the document:
 
@@ -1201,7 +1202,7 @@ class Document:
         :param str text: any arbitrary text
         :return: the Paragraph added to this Document
         """
-        paragraph = Paragraph([InlineText(text)])
+        paragraph = Paragraph([InlineText(text)], indent=indent))
         self._contents.append(paragraph)
         logger.debug(f"Added paragraph to document\n{paragraph}")
         return paragraph
