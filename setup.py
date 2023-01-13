@@ -21,7 +21,6 @@ release = f"{MAJOR}.{MINOR}.{PATCH}"
 setuptools.setup(
     name=name,
     version=release,
-    packages=['snakemd'],
     author="The Renegade Coder",
     author_email="jeremy.grifski@therenegadecoder.com",
     description="A markdown generation library for Python.",
