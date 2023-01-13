@@ -1202,7 +1202,7 @@ class Document:
         :param str text: any arbitrary text
         :return: the Paragraph added to this Document
         """
-        paragraph = Paragraph([InlineText(text)], indent=indent))
+        paragraph = Paragraph([InlineText(text)], indent=indent)
         self._contents.append(paragraph)
         logger.debug(f"Added paragraph to document\n{paragraph}")
         return paragraph
